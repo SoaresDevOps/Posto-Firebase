@@ -22,7 +22,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-        import { getDatabase, ref, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        import { getDatabase, ref, onChildAdded, remove } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
         // Configuração do Firebase
         const firebaseConfig = {
@@ -92,7 +92,15 @@
         // Limpa os resultados à meia-noite
         function limparResultados() {
             const agora = new Date();
-            if (agora.getHours() === 17 && agora.getMinutes() === 3) {
+            if (agora.getHours() === 17 && agora.getMinutes() === 6) {
+                // Remove as entradas do Firebase Realtime Database
+                remove(senhasRef).then(() => {
+                    console.log("Dados removidos com sucesso");
+                }).catch((error) => {
+                    console.error("Erro ao remover dados:", error);
+                });
+
+                // Limpa os dados do localStorage e da tela
                 localStorage.removeItem('ultimasSenhas');
                 document.getElementById('resultado').innerHTML = '';
                 document.getElementById('ultimasSenhas').innerHTML = '';
@@ -110,5 +118,4 @@
             }
         };
     </script>
-</body>
-</html>
+
