@@ -16,6 +16,8 @@
         </div>
         <!-- Elemento de áudio para reprodução -->
         <audio id="audio" src="som_senha.mp3"></audio>
+        <button id="limparTela" class="btn btn-custom">Limpar Tela</button>
+        <p id="mensagem">Usar Antes de Fechar o Posto</p>
     </div>
 
     <!-- Firebase App -->
@@ -89,13 +91,21 @@
             atualizarDados(dados);
         });
 
-        window.onload = function() {
-            let dados = localStorage.getItem('dadosFormulario');
-            if (dados) {
-                dados = JSON.parse(dados);
-                atualizarDados(dados);
-            }
-        };
+        // Função para limpar o resultado
+        function limparResultado() {
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = '';
+
+            const ultimasSenhasDiv = document.getElementById('ultimasSenhas');
+            ultimasSenhasDiv.innerHTML = '';
+
+            // Adiciona um item vazio ao armazenamento local
+            localStorage.setItem('ultimasSenhas', JSON.stringify([]));
+        }
+
+        // Adiciona um ouvinte de evento ao botão de limpar tela
+        document.getElementById('limparTela').addEventListener('click', limparResultado);
     </script>
 </body>
 </html>
+
