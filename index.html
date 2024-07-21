@@ -38,7 +38,7 @@
             </div>
             <button type="submit" class="btn btn-custom">Enviar</button>
             <button type="button" id="limparTela" class="btn btn-custom">Limpar Tela</button>
-            <p>Usar Antes de Fechar o Posto</p>
+            <span id="usarAntes">Usar Antes de Fechar o Posto</span>
         </form>
     </div>
 
@@ -80,18 +80,18 @@
                 .catch((error) => console.error('Erro ao enviar dados:', error));
         });
 
-        // Função para limpar a tela do resultado
-        function limparResultado() {
-            fetch('/limpar-tela', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => console.log('Resposta do servidor:', data))
-            .catch(error => console.error('Erro ao limpar tela:', error));
+        // Função para enviar mensagem para o resultado.html
+        function enviarMensagemParaResultado(mensagem) {
+            const resultadoWindow = window.open('resultado.html', 'resultadoWindow');
+            if (resultadoWindow) {
+                resultadoWindow.postMessage(mensagem, '*');
+            }
         }
 
-        // Adiciona um ouvinte de evento ao botão de limpar tela
-        document.getElementById('limparTela').addEventListener('click', limparResultado);
+        document.getElementById('limparTela').addEventListener('click', function() {
+            enviarMensagemParaResultado('limparTela');
+        });
     </script>
 </body>
 </html>
+
