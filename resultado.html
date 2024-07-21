@@ -92,7 +92,7 @@
         // Limpa os resultados à meia-noite
         function limparResultados() {
             const agora = new Date();
-            if (agora.getHours() === 0 && agora.getMinutes() === 0) {
+            if (agora.getHours() === 17 && agora.getMinutes() === 3) {
                 localStorage.removeItem('ultimasSenhas');
                 document.getElementById('resultado').innerHTML = '';
                 document.getElementById('ultimasSenhas').innerHTML = '';
