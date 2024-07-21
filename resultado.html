@@ -24,7 +24,7 @@
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
         import { getDatabase, ref, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
-        // Your web app's Firebase configuration
+        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAhDIHl443t9KNOXVY-E2uMy7cIq7JCsKI",
             authDomain: "posto-de-saude-42845.firebaseapp.com",
@@ -35,7 +35,7 @@
             measurementId: "G-3WVR8L3X7D"
         };
 
-        // Initialize Firebase
+        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const database = getDatabase(app);
@@ -88,6 +88,19 @@
             const dados = snapshot.val();
             atualizarDados(dados);
         });
+
+        // Limpa os resultados à meia-noite
+        function limparResultados() {
+            const agora = new Date();
+            if (agora.getHours() === 0 && agora.getMinutes() === 0) {
+                localStorage.removeItem('ultimasSenhas');
+                document.getElementById('resultado').innerHTML = '';
+                document.getElementById('ultimasSenhas').innerHTML = '';
+            }
+        }
+
+        // Verifica a cada minuto
+        setInterval(limparResultados, 60000);
 
         window.onload = function() {
             let dados = localStorage.getItem('dadosFormulario');
