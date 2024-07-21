@@ -38,7 +38,7 @@
             </div>
             <button type="submit" class="btn btn-custom">Enviar</button>
             <button type="button" id="limparTela" class="btn btn-warning">Limpar Tela</button>
-            <button type="button" id="usarAntesDeFechar" class="btn btn-info">Usar Antes de Fechar o Posto</button>
+            <p id="usarAntesDeFechar" class="btn btn-info">Usar Antes de Fechar o Posto</p>
         </form>
     </div>
 
@@ -81,17 +81,12 @@
         });
 
         document.getElementById('limparTela').addEventListener('click', function() {
-            // Limpa todos os dados da tela no Firebase
-            const senhasRef = ref(database, 'senhas');
-            remove(senhasRef)
-                .then(() => {
-                    console.log('Dados da tela limpos com sucesso');
-                })
-                .catch((error) => {
-                    console.error('Erro ao limpar dados da tela:', error);
-                });
+            // Envia uma solicitação para o resultado.html limpar sua tela
+            fetch('/limpar-tela', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => console.log('Tela limpa com sucesso'))
+                .catch((error) => console.error('Erro ao limpar tela:', error));
         });
     </script>
 </body>
 </html>
-
