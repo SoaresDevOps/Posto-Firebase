@@ -37,6 +37,8 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-custom">Enviar</button>
+            <button type="button" id="limparTela" class="btn btn-warning">Limpar Tela</button>
+            <button type="button" id="usarAntesDeFechar" class="btn btn-info">Usar Antes de Fechar o Posto</button>
         </form>
     </div>
 
@@ -44,9 +46,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        import { getDatabase, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
-        // Configuração do Firebase
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAhDIHl443t9KNOXVY-E2uMy7cIq7JCsKI",
             authDomain: "posto-de-saude-42845.firebaseapp.com",
@@ -57,7 +59,7 @@
             measurementId: "G-3WVR8L3X7D"
         };
 
-        // Inicializar Firebase
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const database = getDatabase(app);
@@ -71,12 +73,25 @@
 
             const dados = { sala, senha, dr };
 
-            // Enviar dados para o Firebase Realtime Database
+            // Envia os dados para o Firebase Realtime Database
             const newRef = ref(database, 'senhas/' + Date.now());
             set(newRef, dados)
                 .then(() => console.log('Dados enviados com sucesso'))
                 .catch((error) => console.error('Erro ao enviar dados:', error));
         });
+
+        document.getElementById('limparTela').addEventListener('click', function() {
+            // Limpa todos os dados da tela no Firebase
+            const senhasRef = ref(database, 'senhas');
+            remove(senhasRef)
+                .then(() => {
+                    console.log('Dados da tela limpos com sucesso');
+                })
+                .catch((error) => {
+                    console.error('Erro ao limpar dados da tela:', error);
+                });
+        });
     </script>
 </body>
 </html>
+
