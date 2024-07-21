@@ -89,28 +89,18 @@
             atualizarDados(dados);
         });
 
-        // Função para limpar a tela
+        // Função para limpar o conteúdo da tela quando receber mensagem
         function limparTela() {
-            const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = '';
-            localStorage.removeItem('ultimasSenhas');
+            document.getElementById('resultado').innerHTML = '';
             document.getElementById('ultimasSenhas').innerHTML = '';
         }
 
-        window.onload = function() {
-            let dados = localStorage.getItem('dadosFormulario');
-            if (dados) {
-                dados = JSON.parse(dados);
-                atualizarDados(dados);
+        // Recebe mensagens do index.html
+        window.addEventListener('message', (event) => {
+            if (event.data === 'limparTela') {
+                limparTela();
             }
-
-            // Adiciona um listener para limpar a tela
-            window.addEventListener('message', (event) => {
-                if (event.data === 'limparTela') {
-                    limparTela();
-                }
-            });
-        };
+        });
     </script>
 </body>
 </html>
