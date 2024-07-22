@@ -46,17 +46,17 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-        import { getDatabase, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyAhDIHl443t9KNOXVY-E2uMy7cIq7JCsKI",
-            authDomain: "posto-de-saude-42845.firebaseapp.com",
-            projectId: "posto-de-saude-42845",
-            storageBucket: "posto-de-saude-42845.appspot.com",
-            messagingSenderId: "414153607163",
-            appId: "1:414153607163:web:34eb3c8199f70678786d5e",
-            measurementId: "G-3WVR8L3X7D"
+            apiKey: "API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID",
+            measurementId: "MEASUREMENT_ID"
         };
 
         // Initialize Firebase
@@ -81,9 +81,12 @@
         });
 
         document.getElementById('limparTela').addEventListener('click', function() {
-            localStorage.setItem('limparTela', 'true');
-            alert('Tela do resultado será limpa.');
+            const newRef = ref(database, 'limparTela/');
+            set(newRef, { limpar: true })
+                .then(() => console.log('Sinal de limpeza enviado'))
+                .catch((error) => console.error('Erro ao enviar sinal de limpeza:', error));
         });
     </script>
 </body>
 </html>
+
