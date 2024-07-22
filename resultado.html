@@ -89,18 +89,17 @@
             atualizarDados(dados);
         });
 
-        // Função para limpar o conteúdo da tela quando receber mensagem
+        // Função para limpar o conteúdo da tela quando necessário
         function limparTela() {
             document.getElementById('resultado').innerHTML = '';
             document.getElementById('ultimasSenhas').innerHTML = '';
+            localStorage.removeItem('limparTela');  // Remove o sinalizador após limpar a tela
         }
 
-        // Recebe mensagens do index.html
-        window.addEventListener('message', (event) => {
-            if (event.data === 'limparTela') {
-                limparTela();
-            }
-        });
+        // Verifica se a tela deve ser limpa ao carregar a página
+        if (localStorage.getItem('limparTela') === 'true') {
+            limparTela();
+        }
     </script>
 </body>
 </html>
