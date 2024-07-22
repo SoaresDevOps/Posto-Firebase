@@ -38,7 +38,7 @@
             </div>
             <button type="submit" class="btn btn-custom">Enviar</button>
             <button type="button" id="limparTela" class="btn btn-custom">Limpar Tela</button>
-            <span id="usarAntes">Usar Antes de Fechar o Posto</span>
+            <button type="button" class="btn btn-custom" style="pointer-events: none;">Usar Antes de Fechar o Posto</button>
         </form>
     </div>
 
@@ -80,16 +80,15 @@
                 .catch((error) => console.error('Erro ao enviar dados:', error));
         });
 
-        // Função para enviar mensagem para o resultado.html
-        function enviarMensagemParaResultado(mensagem) {
-            const resultadoWindow = window.open('resultado.html', 'resultadoWindow');
-            if (resultadoWindow) {
-                resultadoWindow.postMessage(mensagem, '*');
-            }
-        }
-
         document.getElementById('limparTela').addEventListener('click', function() {
-            enviarMensagemParaResultado('limparTela');
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'resultado.html';
+            document.body.appendChild(iframe);
+            iframe.onload = function() {
+                iframe.contentWindow.postMessage('limparTela', '*');
+                document.body.removeChild(iframe);
+            };
         });
     </script>
 </body>
