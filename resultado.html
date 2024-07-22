@@ -9,7 +9,7 @@
 <body>
     <div class="result">
         <div class="info">
-            <div id="resultado"></div>
+            <div id="resultado">Página limpa</div>
         </div>
         <div class="ultimas-senhas" id="ultimasSenhas">
             <!-- As últimas senhas chamadas aparecerão aqui -->
@@ -85,14 +85,16 @@
         // Recupera dados do Firebase Realtime Database
         const senhasRef = ref(database, 'senhas');
         onChildAdded(senhasRef, (snapshot) => {
-            const dados = snapshot.val();
-            atualizarDados(dados);
+            if (localStorage.getItem('limparTela') !== 'true') {
+                const dados = snapshot.val();
+                atualizarDados(dados);
+            }
         });
 
         // Função para limpar o resultado
         function limparResultado() {
             const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = '';
+            resultadoDiv.innerHTML = 'Página limpa';
 
             const ultimasSenhasDiv = document.getElementById('ultimasSenhas');
             ultimasSenhasDiv.innerHTML = '';
@@ -101,7 +103,7 @@
             localStorage.setItem('ultimasSenhas', JSON.stringify([]));
         }
 
-        // Verifica se a tela deve ser limpa ao carregar a página
+        // Verifica se a tela deve ser limpa
         if (localStorage.getItem('limparTela') === 'true') {
             limparResultado();
             localStorage.removeItem('limparTela');
