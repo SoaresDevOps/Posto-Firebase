@@ -5,21 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: none;
-            z-index: 9999;
-        }
-    </style>
 </head>
 <body>
-    <div class="overlay" id="overlay"></div>
     <div class="result">
         <div class="info">
             <div id="resultado"></div>
@@ -35,17 +22,17 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-        import { getDatabase, ref, onChildAdded, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        import { getDatabase, ref, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "SENDER_ID",
-            appId: "APP_ID",
-            measurementId: "MEASUREMENT_ID"
+            apiKey: "AIzaSyAhDIHl443t9KNOXVY-E2uMy7cIq7JCsKI",
+            authDomain: "posto-de-saude-42845.firebaseapp.com",
+            projectId: "posto-de-saude-42845",
+            storageBucket: "posto-de-saude-42845.appspot.com",
+            messagingSenderId: "414153607163",
+            appId: "1:414153607163:web:34eb3c8199f70678786d5e",
+            measurementId: "G-3WVR8L3X7D"
         };
 
         // Initialize Firebase
@@ -102,23 +89,13 @@
             atualizarDados(dados);
         });
 
-        // Verifica se deve limpar a tela
-        const limparTelaRef = ref(database, 'limparTela');
-        onValue(limparTelaRef, (snapshot) => {
-            const dados = snapshot.val();
-            if (dados && dados.limpar) {
-                const overlay = document.getElementById('overlay');
-                overlay.style.display = 'block';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    const newRef = ref(database, 'limparTela/');
-                    set(newRef, { limpar: false })
-                        .then(() => console.log('Sinal de limpeza removido'))
-                        .catch((error) => console.error('Erro ao remover sinal de limpeza:', error));
-                }, 3000); // O tempo que o fundo branco ficará visível, aqui definido como 3 segundos
+        window.onload = function() {
+            let dados = localStorage.getItem('dadosFormulario');
+            if (dados) {
+                dados = JSON.parse(dados);
+                atualizarDados(dados);
             }
-        });
+        };
     </script>
 </body>
 </html>
-
