@@ -38,7 +38,7 @@
             </div>
             <button type="submit" class="btn btn-custom">Enviar</button>
             <button type="button" id="limparTela" class="btn btn-warning">Limpar Tela</button>
-            <p class="btn btn-info" style="pointer-events: none;">Usar Antes de Fechar o Posto</p>
+            <p id="usarAntesDeFechar" class="btn btn-info">Usar Antes de Fechar o Posto</p>
         </form>
     </div>
 
@@ -46,7 +46,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        import { getDatabase, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
