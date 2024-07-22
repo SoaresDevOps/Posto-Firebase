@@ -89,16 +89,22 @@
             atualizarDados(dados);
         });
 
-        // Função para limpar o conteúdo da tela quando necessário
-        function limparTela() {
-            document.getElementById('resultado').innerHTML = '';
-            document.getElementById('ultimasSenhas').innerHTML = '';
-            localStorage.removeItem('limparTela');  // Remove o sinalizador após limpar a tela
+        // Função para limpar o resultado
+        function limparResultado() {
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = '';
+
+            const ultimasSenhasDiv = document.getElementById('ultimasSenhas');
+            ultimasSenhasDiv.innerHTML = '';
+
+            // Adiciona um item vazio ao armazenamento local
+            localStorage.setItem('ultimasSenhas', JSON.stringify([]));
         }
 
         // Verifica se a tela deve ser limpa ao carregar a página
         if (localStorage.getItem('limparTela') === 'true') {
-            limparTela();
+            limparResultado();
+            localStorage.removeItem('limparTela');
         }
     </script>
 </body>
