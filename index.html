@@ -81,14 +81,8 @@
         });
 
         document.getElementById('limparTela').addEventListener('click', function() {
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = 'resultado.html';
-            document.body.appendChild(iframe);
-            iframe.onload = function() {
-                iframe.contentWindow.postMessage('limparTela', '*');
-                document.body.removeChild(iframe);
-            };
+            localStorage.setItem('limparTela', 'true');
+            alert('Tela do resultado será limpa.');
         });
     </script>
 </body>
